@@ -20,9 +20,12 @@ import br.dev.gustavo.utils.Utils;
 public class Aquamain {
 
 	public static void main(String[] args) {
+    new FuncionarioListaFrame();
+			
 		
-		FuncionarioDAO dao = new FuncionarioDAO(null);
-		dao.getFuncionarios();
+		//FuncionarioDAO dao = new FuncionarioDAO(null);
+		//dao.getFuncionarios();
+		
 		
 	//	new FuncionarioListaFrame();
 	//	new FuncionarioFrame();
@@ -33,7 +36,10 @@ public class Aquamain {
 		
 		//FuncionarioDAO dao = new FuncionarioDAO(funcionario);
 		//dao.gravar();
+	
 	}
+	
+	
 
 	private static void testarLeituraEscritaArquivo() {
 		String caminho = "/Users/25133416/projetoTarefasDS1MA/tarefas";

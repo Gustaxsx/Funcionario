@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -30,15 +31,15 @@ public class FuncionarioFrame {
 	private JButton btnSalvar;
 	private JButton btnSair;
 
-	public FuncionarioFrame() {
+	public FuncionarioFrame(JFrame pai) {
 
-		criarTela();
+		criarTela(pai);
 	}
 
-	private void criarTela() {
-		JFrame telaFuncionario = new JFrame("Cadastro Funcionario");
+	private void criarTela(JFrame pai) {
+		JDialog telaFuncionario = new JDialog(pai, true);
 		telaFuncionario.setSize(500, 500);
-		telaFuncionario.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		telaFuncionario.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		telaFuncionario.setLayout(null);
 		telaFuncionario.setResizable(false);
 		telaFuncionario.setLocationRelativeTo(null);
@@ -125,13 +126,15 @@ public class FuncionarioFrame {
 
 				if (resposta == 0) {
 
-					System.exit(JFrame.EXIT_ON_CLOSE);
+					telaFuncionario.dispose();
 				}
 			}
 		});
 
 		telaFuncionario.setVisible(true);
 	}
+	
+	
 
 	private void limparFormulario() {
 

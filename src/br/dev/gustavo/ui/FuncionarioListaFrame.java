@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.ScrollPane;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +16,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import br.dev.gustavo.dao.FuncionarioDAO;
 import br.dev.gustavo.tarefas.model.Funcionario;
 
 public class FuncionarioListaFrame {
@@ -25,6 +28,11 @@ public class FuncionarioListaFrame {
 	private JTable tabelaFuncionarios; // tabela visualmente
 	private JScrollPane scrollFuncionarios; // container da table
 	String[] colunas = { "CODIGO", "NOME FUNCIONARIO", "CARGO", };
+	
+	public FuncionarioListaFrame () {
+	criarTela();
+		
+	}
 
 	private void criarTela() {
 		JFrame telaFuncionarioLista = new JFrame("Lista de funcionarios");
@@ -42,23 +50,43 @@ public class FuncionarioListaFrame {
 		labelTitulo.setForeground(Color.RED);
 
 		// criar a tabela
-	
-		model = new DefaultTableModel(colunas, 10);
+
+		model = new DefaultTableModel(colunas, 100);
 		tabelaFuncionarios = new JTable(model);
 		scrollFuncionarios = new JScrollPane(tabelaFuncionarios);
 		scrollFuncionarios.setBounds(10, 70, 680, 300);
 
+		carregarDadosTabela();
+
+		btnNovo = new JButton("cadastrar novo funcionario");
+		btnNovo.setBounds(10, 400, 250, 50);
+		btnNovo.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new FuncionarioFrame(telaFuncionarioLista);
+				carregarDadosTabela();
+				
+				
+			}
+		});
+
 		painel.add(labelTitulo);
+		painel.add(scrollFuncionarios);
+		painel.add(btnNovo);
 
 		telaFuncionarioLista.setVisible(true);
 	}
 
-	public void carregarDadosTabela() {
+	private void carregarDadosTabela() {
 
 		List<Funcionario> funcionarios = new ArrayList<>();
 
+		FuncionarioDAO dao = new FuncionarioDAO(null);
+		funcionarios = dao.getFuncionarios();
+
 		int i = 0;
-		
+
 		Object[][] dados = new Object[funcionarios.size()][3];
 
 		for (Funcionario f : funcionarios) {
@@ -66,9 +94,9 @@ public class FuncionarioListaFrame {
 			dados[i][1] = f.getNome();
 			dados[i][2] = f.getCargo();
 			i++;
-		
+
 		}
-		
+
 		model.setDataVector(dados, colunas);
 
 	}
